@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import React from 'react';
+import { Auth0Provider } from '@auth0/auth0-react';
 import ApiComponent from './ApiComponent.js';
 import Profile from './Profile.js';
 
 function App() {
-  const { isAuthenticated } = useAuth0();
-  const [view, setView] = useState('api');
-
-  useEffect(() => {
-    setView(isAuthenticated ? 'profile' : 'api');
-  }, [isAuthenticated]);
+  const currentPath = window.location.pathname;
 
   return (
     <Auth0Provider
@@ -19,9 +14,7 @@ function App() {
     >
       <div>
         <h1>My API App</h1>
-        <button onClick={() => setView('profile')}>Profile</button>
-        {view === 'api' && <ApiComponent />}
-        {view === 'profile' && <Profile />}
+        {currentPath === '/profile' ? <Profile /> : <ApiComponent />}
       </div>
     </Auth0Provider>
   );
