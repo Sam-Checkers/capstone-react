@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import './ApiComponent.css'; // Import the CSS file for styling
+import RetractablePanel from './RetractablePanel';
+import Schedule from './Schedule'; // Import the Schedule component
 
 const ApiComponent = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
@@ -63,6 +65,7 @@ const ApiComponent = () => {
           </div>
         ))}
       </div>
+      <RetractablePanel />
     </div>
   );
 };

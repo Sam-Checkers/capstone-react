@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RegistrationForm from './RegistrationForm';
 import Profile from './Profile';
 import ApiComponent from './ApiComponent';
-import Schedule from './Schedule';
+import Schedule from './Schedule'; // Import the Schedule component
 
 function App() {
   const [showProfile, setShowProfile] = useState(false);
