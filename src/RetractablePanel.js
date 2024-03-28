@@ -14,7 +14,9 @@ const RetractablePanel = () => {
       <button onClick={togglePanel}>
         {isPanelOpen ? 'Hide Schedule' : 'Show Schedule'}
       </button>
-      {isPanelOpen && <Schedule />}
+      <div className="panel-content">
+        {isPanelOpen && <Schedule />}
+      </div>
     </div>
   );
 };

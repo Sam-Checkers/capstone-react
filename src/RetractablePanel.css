@@ -1,9 +1,14 @@
-.panel-container {
+/* RetractablePanel.css */
+:root {
+    --panel-sticking-out: 300px; /* Define a CSS variable for the sticking-out part */
+  }
+  
+  .panel-container {
     position: fixed;
     top: 50px;
-    right: -300px;
-    width: 300px;
-    height: 100%;
+    right: calc(.05 * var(--panel-sticking-out)); /* Use the CSS variable to control how much of the panel sticks out */
+    width: 1* var(--panel-sticking-out); /* Use the CSS variable to control the width of the panel */
+    height: 50px; /* Set the height of the retracted panel */
     background-color: #f2f2f2;
     transition: right 0.3s ease;
     padding: 20px;
@@ -12,8 +17,5 @@
   
   .panel-container.open {
     right: 0;
-  }
-  
-  .panel-container button {
-    margin-bottom: 10px;
+    height: 100%; /* Expand the panel to full height when open */
   }
