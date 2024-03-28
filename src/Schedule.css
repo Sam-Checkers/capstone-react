@@ -1,0 +1,26 @@
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .calendar-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    height: 90vh;
+  }
+  
+  .day-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .bordered-column {
+    width: 100%;
+    border-top: 1px solid #ccc;
+    margin-top: 5px;
+  }
