@@ -5,7 +5,7 @@ const Profile = () => {
   const { user, logout } = useAuth0();
 
   if (!user) {
-    return <div>Loading...</div>; // Add a loading state while user data is being fetched
+    return <div>Loading...</div>;
   }
 
   return (

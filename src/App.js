@@ -1,22 +1,21 @@
-import React from 'react';
-import { Auth0Provider } from '@auth0/auth0-react';
-import ApiComponent from './ApiComponent.js';
-import Profile from './Profile.js';
+import React, { useState } from 'react';
+import RegistrationForm from './RegistrationForm';
+import Profile from './Profile';
+import ApiComponent from './ApiComponent';
 
 function App() {
-  const currentPath = window.location.pathname;
+  const [showProfile, setShowProfile] = useState(false);
+
+  const handleShowProfile = () => {
+    setShowProfile(true);
+  };
 
   return (
-    <Auth0Provider
-      domain="dev-44w2oefzt0a2lc21.us.auth0.com"
-      clientId="ysqE8bFO1asb2a3ST7SroLJbisXY2JUE"
-      redirectUri={window.location.origin}
-    >
-      <div>
-        <h1>My API App</h1>
-        {currentPath === '/profile' ? <Profile /> : <ApiComponent />}
-      </div>
-    </Auth0Provider>
+    <div>
+      <h1>User Registration</h1>
+      {!showProfile && <RegistrationForm onShowProfile={handleShowProfile} />}
+      {showProfile && <Profile />}
+    </div>
   );
 }
 
