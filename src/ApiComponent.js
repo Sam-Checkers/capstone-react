@@ -15,7 +15,26 @@ const ApiComponent = () => {
         if (response.ok) {
           const exerciseData = await response.json();
           const groupedExercises = groupExercisesByCategory(exerciseData.exercises);
-          setExercisesByCategory(groupedExercises);
+
+          // Fetch and set images for each exercise
+          for (const category in groupedExercises) {
+            for (const exercise of groupedExercises[category]) {
+              const imageName = exercise.name; // Assuming exercise name matches image name
+              const imageExtensions = ['jpg', 'jpeg']; // Array of accepted extensions
+              let imageUrl = null;
+              for (const extension of imageExtensions) {
+                const imageURL = `https://capstone-api-81le.onrender.com/get_image/${imageName}.${extension}`;
+                const imageResponse = await fetch(imageURL);
+                if (imageResponse.ok) {
+                  imageUrl = imageURL;
+                  break; // Use the first valid image URL
+                }
+              }
+              exercise.image = imageUrl; // Add image URL to exercise object
+            }
+          }
+
+          setExercisesByCategory(groupedExercises); // Set state after setting images
         } else {
           console.error('Failed to fetch exercises');
         }
@@ -55,10 +74,10 @@ const ApiComponent = () => {
             <div className="grid-container">
               {exercisesByCategory[category].map((exercise) => (
                 <div key={exercise.id} className="grid-item">
-                  <p>ID: {exercise.id}</p>
+                  {exercise.image && <img src={exercise.image} alt={exercise.name} />} {/* Display exercise image if URL is available */}
                   <p>Name: {exercise.name}</p>
                   <p>Main Target: {exercise.main_target}</p>
-                  <p>Secondary Target: {exercise.secondary_target}</p>
+                  {exercise.secondary_target !== 'N/A' && <p>Secondary Target: {exercise.secondary_target}</p>}
                 </div>
               ))}
             </div>
