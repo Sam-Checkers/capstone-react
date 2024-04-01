@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Schedule from './Schedule';
-import './RetractablePanel.css'; // Import the CSS file for styling
+import './RetractablePanel.css';
 
-const RetractablePanel = () => {
+const RetractablePanel = ({ onShowSchedule }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
+    if (onShowSchedule && isPanelOpen) {
+      onShowSchedule();
+    }
   };
 
   return (

@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import RegistrationForm from './RegistrationForm';
 import Profile from './Profile';
 import ApiComponent from './ApiComponent';
-import Schedule from './Schedule'; // Import the Schedule component
+import Schedule from './Schedule';
+import Login from './Login';
 
 function App() {
   const [showProfile, setShowProfile] = useState(false);
@@ -29,14 +30,21 @@ function App() {
   console.log('currentPath:', currentPath);
   console.log('showProfile:', showProfile);
 
-  return (
-    <div>
-      {currentPath === '/register' && !showProfile && <RegistrationForm onShowProfile={handleShowProfile} />}
-      {currentPath === '/profile' && <Profile />}
-      {currentPath === '/api' && <ApiComponent />}
-      {currentPath === '/schedule' && <Schedule />}
-    </div>
-  );
+  let componentToRender;
+
+  if (currentPath === '/register' && !showProfile) {
+    componentToRender = <RegistrationForm onShowProfile={handleShowProfile} />;
+  } else if (currentPath === '/profile') {
+    componentToRender = <Profile />;
+  } else if (currentPath === '/') {
+    componentToRender = <ApiComponent />;
+  } else if (currentPath === '/schedule') {
+    componentToRender = <Schedule />;
+  } else if (currentPath === '/login') {
+    componentToRender = <Login />;
+  }
+
+  return <div>{componentToRender}</div>;
 }
 
 export default App;

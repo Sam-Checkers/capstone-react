@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import './ApiComponent.css'; // Import the CSS file for styling
+import './ApiComponent.css';
 import RetractablePanel from './RetractablePanel';
-import Schedule from './Schedule'; // Import the Schedule component
+import Schedule from './Schedule';
 
 const ApiComponent = () => {
   const { loginWithRedirect, logout, isAuthenticated, user } = useAuth0();
@@ -16,25 +16,24 @@ const ApiComponent = () => {
           const exerciseData = await response.json();
           const groupedExercises = groupExercisesByCategory(exerciseData.exercises);
 
-          // Fetch and set images for each exercise
           for (const category in groupedExercises) {
             for (const exercise of groupedExercises[category]) {
-              const imageName = exercise.name; // Assuming exercise name matches image name
-              const imageExtensions = ['jpg', 'jpeg']; // Array of accepted extensions
+              const imageName = exercise.name;
+              const imageExtensions = ['jpg', 'jpeg'];
               let imageUrl = null;
               for (const extension of imageExtensions) {
                 const imageURL = `https://capstone-api-81le.onrender.com/get_image/${imageName}.${extension}`;
                 const imageResponse = await fetch(imageURL);
                 if (imageResponse.ok) {
                   imageUrl = imageURL;
-                  break; // Use the first valid image URL
+                  break;
                 }
               }
-              exercise.image = imageUrl; // Add image URL to exercise object
+              exercise.image = imageUrl;
             }
           }
 
-          setExercisesByCategory(groupedExercises); // Set state after setting images
+          setExercisesByCategory(groupedExercises);
         } else {
           console.error('Failed to fetch exercises');
         }
@@ -64,9 +63,7 @@ const ApiComponent = () => {
           <p>Welcome, {user.name}!</p>
           <button onClick={() => logout({ returnTo: window.location.origin })}>Log Out</button>
         </div>
-      ) : (
-        <button onClick={() => loginWithRedirect()}>Log In</button>
-      )}
+      ) : null}
       <div>
         {Object.keys(exercisesByCategory).map((category) => (
           <div key={category}>
@@ -74,7 +71,7 @@ const ApiComponent = () => {
             <div className="grid-container">
               {exercisesByCategory[category].map((exercise) => (
                 <div key={exercise.id} className="grid-item">
-                  {exercise.image && <img src={exercise.image} alt={exercise.name} />} {/* Display exercise image if URL is available */}
+                  {exercise.image && <img src={exercise.image} alt={exercise.name} />}
                   <p>Name: {exercise.name}</p>
                   <p>Main Target: {exercise.main_target}</p>
                   {exercise.secondary_target !== 'N/A' && <p>Secondary Target: {exercise.secondary_target}</p>}
