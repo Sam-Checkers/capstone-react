@@ -55,6 +55,22 @@ const ApiComponent = () => {
     }, {});
   };
 
+  // Event handlers for drag and drop
+  const handleDragStart = (event, exerciseId) => {
+    event.dataTransfer.setData('text/plain', exerciseId);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event, category) => {
+    event.preventDefault();
+    const exerciseId = event.dataTransfer.getData('text/plain');
+    // Handle the drop action, e.g., move the exercise to the new category
+    // You can update the state or make an API call to update the exercise category
+  };
+
   return (
     <div>
       <h1>Exercise List</h1>
@@ -70,7 +86,14 @@ const ApiComponent = () => {
             <h2>{category}</h2>
             <div className="grid-container">
               {exercisesByCategory[category].map((exercise) => (
-                <div key={exercise.id} className="grid-item">
+                <div
+                  key={exercise.id}
+                  className="grid-item"
+                  draggable="true" // Make the grid item draggable
+                  onDragStart={(event) => handleDragStart(event, exercise.id)} // Event handler for drag start
+                  onDragOver={handleDragOver} // Event handler for drag over
+                  onDrop={(event) => handleDrop(event, category)} // Event handler for drop
+                >
                   {exercise.image && <img src={exercise.image} alt={exercise.name} />}
                   <p>Name: {exercise.name}</p>
                   <p>Main Target: {exercise.main_target}</p>
