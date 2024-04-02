@@ -2,7 +2,11 @@ import React from 'react';
 import moment from 'moment';
 import './Schedule.css';
 
-const Schedule = () => {
+const Schedule = ({ isLoggedIn }) => {
+  if (!isLoggedIn) {
+    return <div>Please log in to view the schedule.</div>;
+  }
+
   const currentDate = moment();
   const startOfWeek = currentDate.clone().startOf('week');
   const daysOfWeek = [];

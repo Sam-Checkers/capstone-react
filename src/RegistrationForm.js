@@ -1,58 +1,50 @@
 import React, { useState } from 'react';
 
-function RegistrationForm() {
+const RegistrationPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch('https://capstone-api-81le.onrender.com/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+  const handleRegistration = () => {
+    fetch('https://capstone-api-81le.onrender.com/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then(response => {
+        if (response.ok) {
+          setMessage('Registration successful!');
+          // Handle any further actions after successful registration
+        } else {
+          setMessage('Registration failed. Please try again.');
+          // Handle any further actions after failed registration
+        }
+      })
+      .catch(error => {
+        setMessage('Registration failed. Please try again.');
+        // Handle any further actions after failed registration
       });
-      const data = await response.json();
-      if (response.ok) {
-        setMessage(data.message);
-      } else {
-        setError(data.error);
-      }
-    } catch (error) {
-      setError('An error occurred while registering the user');
-    }
   };
 
   return (
     <div>
-      <h2>Registration Form</h2>
-      {error && <p>Error: {error}</p>}
-      {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit}>
+      <h2>Register</h2>
+      <form>
         <div>
           <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div>
           <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <button type="submit">Register</button>
+        <button type="button" onClick={handleRegistration}>Register</button>
       </form>
+      <p>{message}</p>
     </div>
   );
-}
+};
 
-export default RegistrationForm;
+export default RegistrationPage;

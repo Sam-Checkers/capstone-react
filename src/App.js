@@ -10,13 +10,15 @@ function App() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
   const handleShowProfile = () => {
-    console.log('handleShowProfile called');
     setShowProfile(true);
+  };
+
+  const handleLoginRedirect = () => {
+    setCurrentPath('/login');
   };
 
   useEffect(() => {
     const handlePathChange = () => {
-      console.log('handlePathChange called');
       setCurrentPath(window.location.pathname);
     };
 
@@ -26,9 +28,6 @@ function App() {
       window.removeEventListener('popstate', handlePathChange);
     };
   }, [currentPath]);
-
-  console.log('currentPath:', currentPath);
-  console.log('showProfile:', showProfile);
 
   let componentToRender;
 
@@ -44,7 +43,12 @@ function App() {
     componentToRender = <Login />;
   }
 
-  return <div>{componentToRender}</div>;
+  return (
+    <div>
+      <button onClick={handleLoginRedirect}>Login</button>
+      <div>{componentToRender}</div>
+    </div>
+  );
 }
 
 export default App;
