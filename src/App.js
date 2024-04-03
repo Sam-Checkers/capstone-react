@@ -8,6 +8,7 @@ import Login from './Login';
 function App() {
   const [showProfile, setShowProfile] = useState(false);
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleShowProfile = () => {
     setShowProfile(true);
@@ -15,6 +16,19 @@ function App() {
 
   const handleLoginRedirect = () => {
     setCurrentPath('/login');
+  };
+
+  const handleLogout = () => {
+    fetch('https://capstone-api-81le.onrender.com/logout')
+      .then(response => {
+        if (response.ok) {
+          setIsLoggedIn(false);
+          setCurrentPath('/');
+        }
+      })
+      .catch(error => {
+        console.error('Error logging out:', error);
+      });
   };
 
   useEffect(() => {
@@ -43,9 +57,17 @@ function App() {
     componentToRender = <Login />;
   }
 
+  let buttonToRender;
+
+  if (currentPath === '/login') {
+    buttonToRender = <button onClick={handleLoginRedirect}>Login</button>;
+  } else if (isLoggedIn) {
+    buttonToRender = <button onClick={handleLogout}>Logout</button>;
+  }
+
   return (
     <div>
-      <button onClick={handleLoginRedirect}>Login</button>
+      {buttonToRender}
       <div>{componentToRender}</div>
     </div>
   );

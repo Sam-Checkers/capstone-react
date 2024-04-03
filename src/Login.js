@@ -17,7 +17,8 @@ const Login = () => {
 
       if (response.ok) {
         setMessage('Login successful');
-        redirectCallback('/schedule');
+        localStorage.setItem('user', JSON.stringify(await response.json()))
+        // redirectCallback('/schedule');
       } else {
         const data = await response.json();
         setMessage(data.message);

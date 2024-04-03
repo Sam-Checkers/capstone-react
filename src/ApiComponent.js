@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react';
 import './ApiComponent.css';
 import RetractablePanel from './RetractablePanel';
 import { useUserAuth } from './UserAuthContext';
-
 const ApiComponent = () => {
+  const [user, setUser] = useState()
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
   const { isAuthenticated, logout, login } = useUserAuth();
   const [exercisesByCategory, setExercisesByCategory] = useState({});
-
   useEffect(() => {
     const fetchExercises = async () => {
       try {
@@ -40,7 +46,6 @@ const ApiComponent = () => {
     };
     fetchExercises();
   }, [isAuthenticated]);
-
   const groupExercisesByCategory = (exercises) => {
     return exercises.reduce((grouped, exercise) => {
       if (!grouped[exercise.category]) {
@@ -50,7 +55,6 @@ const ApiComponent = () => {
       return grouped;
     }, {});
   };
-
   const handleAddUserExercise = async (exerciseId, day) => {
     try {
       const response = await fetch(`https://capstone-api-81le.onrender.com/add_user_exercise/${exerciseId}`, {
@@ -67,21 +71,32 @@ const ApiComponent = () => {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('https://capstone-api-81le.onrender.com/logout', {
+        method: 'GET',
+      });
+      if (response.ok) {
+        // Perform any necessary actions after successful logout
+        console.log('Logout successful');
+      } else {
+        // Handle unsuccessful logout
+        console.error('Failed to logout');
+      }
+    } catch (error) {
+      // Handle errors during logout
+      console.error('Error during logout:', error);
+    }
+  };
+
   return (
     <div>
       <h1>Exercise List</h1>
-      {isAuthenticated ? (
-        <div>
-          <button onClick={logout}>Log Out</button>
-        </div>
-      ) : (
-        <button onClick={login}>Log In</button>
-      )}
       <div>
         {Object.keys(exercisesByCategory).map((category) => (
           <div key={category}>
-            <h2>{category}</h2>
-            <div className="grid-container">
+            <h2 className='category-heading'>{category}</h2>
+            <div className={`grid-container ${category.toLowerCase()}`}>
               {exercisesByCategory[category].map((exercise) => (
                 <div key={exercise.id} className="grid-item">
                   {exercise.image && <img src={exercise.image} alt={exercise.name} />}
@@ -101,5 +116,4 @@ const ApiComponent = () => {
     </div>
   );
 };
-
 export default ApiComponent;

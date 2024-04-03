@@ -1,11 +1,17 @@
 import React from 'react';
 import moment from 'moment';
 import './Schedule.css';
+import { useEffect, useState } from 'react';
 
 const Schedule = ({ isLoggedIn }) => {
-  if (!isLoggedIn) {
-    return <div>Please log in to view the schedule.</div>;
-  }
+  const [user, setUser] = useState()
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      setUser(foundUser);
+    }
+  }, []);
 
   const currentDate = moment();
   const startOfWeek = currentDate.clone().startOf('week');
