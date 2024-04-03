@@ -16,15 +16,12 @@ const RegistrationPage = () => {
       .then(response => {
         if (response.ok) {
           setMessage('Registration successful!');
-          // Handle any further actions after successful registration
         } else {
           setMessage('Registration failed. Please try again.');
-          // Handle any further actions after failed registration
         }
       })
       .catch(error => {
         setMessage('Registration failed. Please try again.');
-        // Handle any further actions after failed registration
       });
   };
 

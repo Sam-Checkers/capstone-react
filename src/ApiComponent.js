@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './ApiComponent.css';
 import RetractablePanel from './RetractablePanel';
 import { useUserAuth } from './UserAuthContext';
+
 const ApiComponent = () => {
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
   useEffect(() => {
     const loggedInUser = localStorage.getItem("user");
     if (loggedInUser) {
       const foundUser = JSON.parse(loggedInUser);
       setUser(foundUser);
+      console.log('User is logged in:', foundUser);
     }
   }, []);
+
   const { isAuthenticated, logout, login } = useUserAuth();
   const [exercisesByCategory, setExercisesByCategory] = useState({});
   useEffect(() => {
@@ -55,37 +58,20 @@ const ApiComponent = () => {
       return grouped;
     }, {});
   };
-  const handleAddUserExercise = async (exerciseId, day) => {
+  const handleAddExerciseSunday = async (exerciseId) => {
     try {
       const response = await fetch(`https://capstone-api-81le.onrender.com/add_user_exercise/${exerciseId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ day }),
+        body: JSON.stringify({ day: 'Sunday' }),
       });
       if (response.ok) {
       } else {
       }
     } catch (error) {
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('https://capstone-api-81le.onrender.com/logout', {
-        method: 'GET',
-      });
-      if (response.ok) {
-        // Perform any necessary actions after successful logout
-        console.log('Logout successful');
-      } else {
-        // Handle unsuccessful logout
-        console.error('Failed to logout');
-      }
-    } catch (error) {
-      // Handle errors during logout
-      console.error('Error during logout:', error);
+      console.error('Error adding exercise:', error);
     }
   };
 
@@ -103,9 +89,7 @@ const ApiComponent = () => {
                   <p>Name: {exercise.name}</p>
                   <p>Main Target: {exercise.main_target}</p>
                   {exercise.secondary_target !== 'N/A' && <p>Secondary Target: {exercise.secondary_target}</p>}
-                  <div>
-                    <button onClick={() => handleAddUserExercise(exercise.id, 'Sunday')}>Add to Sunday</button>
-                  </div>
+                  <button onClick={() => handleAddExerciseSunday(exercise.id)}>Add Sunday</button>
                 </div>
               ))}
             </div>
@@ -116,4 +100,5 @@ const ApiComponent = () => {
     </div>
   );
 };
+
 export default ApiComponent;
