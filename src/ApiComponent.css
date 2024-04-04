@@ -1,53 +1,87 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  grid-gap: 20px; /* Default grid gap */
+  grid-gap: 20px;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 }
 
 .grid-item {
-  border: 1px solid #ccc;
-  padding: 10px;
+  border: 1px solid #e0e0e0;
+  padding: 15px;
   text-align: center;
+  transition: all 0.3s ease;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .grid-item img {
   max-width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius: 8px;
 }
 
 .grid-container.chest {
-  grid-gap: 200px;
-  background-color: #ccc;
+  background-color: #f7cac9;
 }
 
 .grid-container.legs {
-  grid-gap: 80px;
-  background-color: beige;
+  background-color: #ffcccb;
 }
 
 .grid-container.arms {
-  grid-gap: 80px;
-  background-color: bisque;
+  background-color: #ff9966;
 }
 
 .grid-container.cardio {
-  grid-gap: 80px;
-  background-color: azure;
+  background-color: #ff6347;
 }
 
 .grid-container.back {
-  background-color: aliceblue;
+  background-color: #add8e6;
 }
 
 .grid-container.core {
-  background-color: aqua;
+  background-color: #7fffd4;
 }
 
 .grid-container > div > h2 {
-  text-transform: uppercase !important;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
 }
 
-.category-heading {
-  text-transform: uppercase;
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.error-message {
+  color: #ff0000;
+  font-size: 0.9rem;
+  margin-top: 5px;
+}
+
+.success-message {
+  color: #008000;
+  font-size: 0.9rem;
+  margin-top: 5px;
 }

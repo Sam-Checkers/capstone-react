@@ -93,23 +93,28 @@ const ApiComponent = () => {
   return (
     <div>
       <h1>Exercise List</h1>
-      <div>
-        {Object.keys(exercisesByCategory).map((category) => (
-          <div key={category}>
-            <h2 className='category-heading'>{category}</h2>
-            <div className={`grid-container ${category.toLowerCase()}`}>
-              {exercisesByCategory[category].map((exercise) => (
-                <div key={exercise.id} className="grid-item">
-                  {exercise.image && <img src={exercise.image} alt={exercise.name} />}
-                  <p>Name: {exercise.name}</p>
-                  <p>Main Target: {exercise.main_target}</p>
-                  {exercise.secondary_target !== 'N/A' && <p>Secondary Target: {exercise.secondary_target}</p>}
-                  {isAuthenticated && <button onClick={() => addExerciseToSchedule(exercise.id, 'Sunday')}>Add to Sunday</button>}
+      <div className="category-container">
+        {Object.keys(exercisesByCategory).map((category) => {
+          const categoryInCaps = category.toUpperCase();
+          return (
+            <div key={category} className="category-wrapper">
+              <div className={`grid-container ${category.toLowerCase()}`}>
+                <div className="category-header">
+                  <h2 className='category-heading'>{categoryInCaps}</h2>
                 </div>
-              ))}
+                {exercisesByCategory[category].map((exercise) => (
+                  <div key={exercise.id} className="grid-item">
+                    {exercise.image && <img src={exercise.image} alt={exercise.name} />}
+                    <p>Name: {exercise.name}</p>
+                    <p>Main Target: {exercise.main_target}</p>
+                    {exercise.secondary_target !== 'N/A' && <p>Secondary Target: {exercise.secondary_target}</p>}
+                    {isAuthenticated && <button onClick={() => addExerciseToSchedule(exercise.id, 'Sunday')}>Add to Sunday</button>}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <RetractablePanel />
     </div>
