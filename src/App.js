@@ -1,35 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { UserAuthProvider } from './UserAuthContext';  // Import the UserAuthProvider
 import RegistrationForm from './RegistrationForm';
 import Profile from './Profile';
 import ApiComponent from './ApiComponent';
 import Schedule from './Schedule';
 import Login from './Login';
+import ExerciseForm from './ExerciseForm';
 
 function App() {
-  const [showProfile, setShowProfile] = useState(false);
   const [currentPath, setCurrentPath] = useState(window.location.pathname);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleShowProfile = () => {
-    setShowProfile(true);
-  };
-
-  const handleLoginRedirect = () => {
-    setCurrentPath('/login');
-  };
-
-  const handleLogout = () => {
-    fetch('https://capstone-api-81le.onrender.com/logout')
-      .then(response => {
-        if (response.ok) {
-          setIsLoggedIn(false);
-          setCurrentPath('/');
-        }
-      })
-      .catch(error => {
-        console.error('Error logging out:', error);
-      });
-  };
 
   useEffect(() => {
     const handlePathChange = () => {
@@ -45,8 +24,8 @@ function App() {
 
   let componentToRender;
 
-  if (currentPath === '/register' && !showProfile) {
-    componentToRender = <RegistrationForm onShowProfile={handleShowProfile} />;
+  if (currentPath === '/register') {
+    componentToRender = <RegistrationForm />;
   } else if (currentPath === '/profile') {
     componentToRender = <Profile />;
   } else if (currentPath === '/') {
@@ -55,21 +34,16 @@ function App() {
     componentToRender = <Schedule />;
   } else if (currentPath === '/login') {
     componentToRender = <Login />;
-  }
-
-  let buttonToRender;
-
-  if (currentPath === '/login') {
-    buttonToRender = <button onClick={handleLoginRedirect}>Login</button>;
-  } else if (isLoggedIn) {
-    buttonToRender = <button onClick={handleLogout}>Logout</button>;
+  } else if (currentPath === '/exerciseform') {
+    componentToRender = <ExerciseForm />;
   }
 
   return (
-    <div>
-      {buttonToRender}
-      <div>{componentToRender}</div>
-    </div>
+    <UserAuthProvider>  {/* Wrap your components with the UserAuthProvider */}
+      <div>
+        <div>{componentToRender}</div>
+      </div>
+    </UserAuthProvider>
   );
 }
 
