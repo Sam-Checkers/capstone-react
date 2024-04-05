@@ -1,26 +1,71 @@
+/* Color Scheme */
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Day Item */
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.calendar-day:hover {
+  transform: translateY(-5px);
+}
+
+/* Day Header */
+.day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.day-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+
+/* Day Item */
+.calendar-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  height: 750px; /* Adjust the height as needed */
+  margin-bottom: 20px; /* Add margin between days */
+}
+
+/* Bordered Column */
+.bordered-column {
+  width: 100%;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: repeat(1, 1fr);
   }
-  
-  .calendar-day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #ccc;
-    padding: 10px;
-    height: 90vh;
-  }
-  
-  .day-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .bordered-column {
-    width: 100%;
-    border-top: 1px solid #ccc;
-    margin-top: 5px;
-  }
+}

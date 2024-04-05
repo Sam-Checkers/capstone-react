@@ -1,19 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { UserAuthContext } from './UserAuthContext';
+import './NavBar.css'
 
 function NavBar() {
+  const { isAuthenticated, logout } = useContext(UserAuthContext);
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <nav>
       <ul>
         <li>
-          <Link to="/exercises">Exercises</Link>
+          <a href="/">Home</a>
         </li>
         <li>
-          <Link to="/profile">Profile</Link>
+          <a href="/schedule">Schedule</a>
         </li>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
+        {!isAuthenticated && (
+          <li>
+            <a href="/register">Register</a>
+          </li>
+        )}
+        {!isAuthenticated && (
+          <li>
+            <a href="/login">Login</a>
+          </li>
+        )}
+        {isAuthenticated && (
+          <li>
+            <a href="/logout" onClick={handleLogout}>Logout</a>
+          </li>
+        )}
       </ul>
     </nav>
   );

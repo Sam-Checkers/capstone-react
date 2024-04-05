@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const RegistrationPage = () => {
+const RegistrationPage = ({ onRegistrationSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -16,6 +16,7 @@ const RegistrationPage = () => {
       .then(response => {
         if (response.ok) {
           setMessage('Registration successful!');
+          onRegistrationSuccess(); // Call the callback on successful registration
         } else {
           setMessage('Registration failed. Please try again.');
         }

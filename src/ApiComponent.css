@@ -1,3 +1,20 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #af8e88;
+  margin-top: -20px;
+  margin-bottom: 0px;
+  position: relative;
+}
+
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -12,10 +29,10 @@
   padding: 15px;
   text-align: center;
   transition: all 0.3s ease;
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
 }
 
 .grid-item img {
@@ -26,39 +43,51 @@
 }
 
 .grid-container.chest {
-  background-color: #f7cac9;
+  background-color: #375dad;
+  grid-gap: 110px;
+}
+
+.custom-grid-container {
+  margin-left: -230px;
 }
 
 .grid-container.legs {
-  background-color: #ffcccb;
+  background-color: #941a18;
 }
 
 .grid-container.arms {
-  background-color: #ff9966;
+  background-color: #b15102de;
 }
 
 .grid-container.cardio {
-  background-color: #ff6347;
+  background-color: #803f34;
 }
 
 .grid-container.back {
-  background-color: #add8e6;
+  background-color: #205769;
+  grid-gap: 10px;
 }
 
 .grid-container.core {
-  background-color: #7fffd4;
+  background-color: #375c4f;
+  grid-gap: 10px;
 }
 
 .grid-container > div > h2 {
   text-transform: uppercase;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   margin-bottom: 15px;
+  color: #000000;
+  font-weight: bold;
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 20px;
   text-align: center;
+  color: #222;
+  text-transform: uppercase;
+  font-weight: bold;
 }
 
 button {
@@ -84,4 +113,45 @@ button {
   color: #008000;
   font-size: 0.9rem;
   margin-top: 5px;
+}
+
+.exercise-names {
+  font-family: 'Helvetica', sans-serif;
+}
+
+.main-target {
+  font-family: 'Helvetica';
+}
+
+.button-container {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.grid-item:hover .button-container {
+  opacity: 1;
+}
+
+.button-container button {
+  margin: 5px;
+}
+
+.additional-column {
+  margin-top: 100px;
+  margin-left: 150px;
+}
+
+.additional-column h1 {
+  font-size: 5rem;
+}
+
+.additional-column.arms {
+  margin-top: 150px;
+  margin-left: 300px;
 }

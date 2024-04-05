@@ -1,48 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { UserAuthProvider } from './UserAuthContext';  // Import the UserAuthProvider
-import RegistrationForm from './RegistrationForm';
+import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { UserAuthProvider, useUserAuth } from './UserAuthContext';
+import NavBar from './NavBar';
 import Profile from './Profile';
 import ApiComponent from './ApiComponent';
 import Schedule from './Schedule';
-import Login from './Login';
+import LoginPage from './Login';
 import ExerciseForm from './ExerciseForm';
+import Register from './Register';
 
 function App() {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname);
-
-  useEffect(() => {
-    const handlePathChange = () => {
-      setCurrentPath(window.location.pathname);
-    };
-
-    window.addEventListener('popstate', handlePathChange);
-
-    return () => {
-      window.removeEventListener('popstate', handlePathChange);
-    };
-  }, [currentPath]);
+  const { isAuthenticated } = useUserAuth();
+  const currentPath = window.location.pathname;
 
   let componentToRender;
 
-  if (currentPath === '/register') {
-    componentToRender = <RegistrationForm />;
-  } else if (currentPath === '/profile') {
-    componentToRender = <Profile />;
-  } else if (currentPath === '/') {
-    componentToRender = <ApiComponent />;
-  } else if (currentPath === '/schedule') {
-    componentToRender = <Schedule />;
-  } else if (currentPath === '/login') {
-    componentToRender = <Login />;
-  } else if (currentPath === '/exerciseform') {
-    componentToRender = <ExerciseForm />;
+  if (!isAuthenticated) {
+    if (currentPath === '/register') {
+      componentToRender = <Register />;
+    } else {
+      componentToRender = <LoginPage />;
+    }
+  } else {
+    if (currentPath === '/profile') {
+      componentToRender = <Profile />;
+    } else if (currentPath === '/') {
+      componentToRender = <ApiComponent />;
+    } else if (currentPath === '/schedule') {
+      componentToRender = <Schedule />;
+    } else if (currentPath === '/exerciseform') {
+      componentToRender = <ExerciseForm />;
+    }
   }
 
   return (
-    <UserAuthProvider>  {/* Wrap your components with the UserAuthProvider */}
-      <div>
-        <div>{componentToRender}</div>
-      </div>
+    <UserAuthProvider>
+      <Router>
+        <div>
+          <NavBar />
+          <div>{componentToRender}</div>
+        </div>
+      </Router>
     </UserAuthProvider>
   );
 }
