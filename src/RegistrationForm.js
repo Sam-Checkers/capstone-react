@@ -16,7 +16,7 @@ const RegistrationPage = ({ onRegistrationSuccess }) => {
       .then(response => {
         if (response.ok) {
           setMessage('Registration successful!');
-          onRegistrationSuccess(); // Call the callback on successful registration
+          onRegistrationSuccess();
         } else {
           setMessage('Registration failed. Please try again.');
         }
