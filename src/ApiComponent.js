@@ -12,10 +12,13 @@ const ApiComponent = () => {
     try {
       console.log('Adding exercise to schedule:', exerciseId, day);
   
-      const tokenFromStorage = localStorage.getItem('user');
+      const tokenFromStorage = localStorage.getItem('token');
       if (!tokenFromStorage) {
         console.error('User token not found in local storage. Unable to add exercise to schedule.');
         return;
+      }
+      if (tokenFromStorage) {
+        console.log(`Bearer ${tokenFromStorage}`)
       }
   
       const response = await fetch(`https://capstone-api-81le.onrender.com/add_user_exercise/${exerciseId}`, {
