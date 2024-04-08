@@ -48,51 +48,47 @@ const ApiComponent = () => {
 
   useEffect(() => {
     console.log('Checking for user token in local storage');
-    const tokenFromStorage = localStorage.getItem('user');
+    const tokenFromStorage = localStorage.getItem('token');
     if (tokenFromStorage) {
-      console.log('User token found in local storage:', tokenFromStorage);
+      console.log('User token from registration:', tokenFromStorage);
       setUserToken(tokenFromStorage);
     }
   
-    if (tokenFromStorage) {
+    if (tokenFromStorage && isAuthenticated) {
       console.log('User token found:', tokenFromStorage);
   
-      if (isAuthenticated) {
-        console.log('User is logged in. Token:', tokenFromStorage);
-  
-        const fetchExercises = async () => {
-          try {
-            const response = await fetch('https://capstone-api-81le.onrender.com/get_all_exercises');
-            if (response.ok) {
-              const exerciseData = await response.json();
-              const groupedExercises = groupExercisesByCategory(exerciseData.exercises);
-              const exerciseIdsWithJpeg = [3, 4, 5, 7, 8, 11, 16, 17, 21];
-              for (const category in groupedExercises) {
-                for (const exercise of groupedExercises[category]) {
-                  const imageName = exercise.name;
-                  const imageExtensions = exerciseIdsWithJpeg.includes(exercise.id) ? ['jpeg'] : ['jpg', 'jpeg'];
-                  let imageUrl = null;
-                  for (const extension of imageExtensions) {
-                    const imageURL = `https://capstone-api-81le.onrender.com/get_image/${imageName}.${extension}`;
-                    const imageResponse = await fetch(imageURL);
-                    if (imageResponse.ok) {
-                      imageUrl = imageURL;
-                      break;
-                    }
+      const fetchExercises = async () => {
+        try {
+          const response = await fetch('https://capstone-api-81le.onrender.com/get_all_exercises');
+          if (response.ok) {
+            const exerciseData = await response.json();
+            const groupedExercises = groupExercisesByCategory(exerciseData.exercises);
+            const exerciseIdsWithJpeg = [3, 4, 5, 7, 8, 11, 16, 17, 21];
+            for (const category in groupedExercises) {
+              for (const exercise of groupedExercises[category]) {
+                const imageName = exercise.name;
+                const imageExtensions = exerciseIdsWithJpeg.includes(exercise.id) ? ['jpeg'] : ['jpg', 'jpeg'];
+                let imageUrl = null;
+                for (const extension of imageExtensions) {
+                  const imageURL = `https://capstone-api-81le.onrender.com/get_image/${imageName}.${extension}`;
+                  const imageResponse = await fetch(imageURL);
+                  if (imageResponse.ok) {
+                    imageUrl = imageURL;
+                    break;
                   }
-                  exercise.image = imageUrl;
                 }
+                exercise.image = imageUrl;
               }
-              setExercisesByCategory(groupedExercises);
-            } else {
-              console.error('Failed to fetch exercises');
             }
-          } catch (error) {
-            console.error('Error fetching exercises:', error);
+            setExercisesByCategory(groupedExercises);
+          } else {
+            console.error('Failed to fetch exercises');
           }
-        };
-        fetchExercises();
-      }
+        } catch (error) {
+          console.error('Error fetching exercises:', error);
+        }
+      };
+      fetchExercises();
     }
   }, [isAuthenticated, setUserToken]);
 

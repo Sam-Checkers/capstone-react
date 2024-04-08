@@ -9,7 +9,6 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      // Make a POST request to the backend API to authenticate the user
       const response = await fetch('https://capstone-api-81le.onrender.com/login', {
         method: 'POST',
         headers: {
@@ -19,10 +18,8 @@ const Login = () => {
       });
       const data = await response.json();
       
-      // Display the token in the console
       console.log('User token:', data.access_token);
       
-      // Call the login function with the received token if the login is successful
       login(data.access_token);
       
       setMessage('Login successful');
