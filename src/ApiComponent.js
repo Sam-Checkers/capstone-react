@@ -7,6 +7,8 @@ const ApiComponent = () => {
   const { isAuthenticated, userToken, setUserToken } = useUserAuth();
 
   const [exercisesByCategory, setExercisesByCategory] = useState({});
+  const [schedule, setSchedule] = useState([]);
+  const [retractablePanelKey, setRetractablePanelKey] = useState(0); // Add a state for the key
 
   const addExerciseToSchedule = async (exerciseId, day) => {
     try {
@@ -18,7 +20,7 @@ const ApiComponent = () => {
         return;
       }
       if (tokenFromStorage) {
-        console.log(`Bearer ${tokenFromStorage}`)
+        console.log(`Bearer ${tokenFromStorage}`);
       }
   
       const response = await fetch(`https://capstone-api-81le.onrender.com/add_user_exercise/${exerciseId}`, {
@@ -27,7 +29,7 @@ const ApiComponent = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${tokenFromStorage}`,
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           exerciseId: exerciseId,
           day: day,
         }),
@@ -40,6 +42,9 @@ const ApiComponent = () => {
           const newToken = data.newToken;
           localStorage.setItem('token', newToken);
         }
+  
+        setSchedule([...schedule, { exerciseId, day }]);
+        setRetractablePanelKey(prevKey => prevKey + 1); // Update the key to force re-render
       } else {
         const errorData = await response.json();
         console.error(errorData.error);
@@ -105,6 +110,10 @@ const ApiComponent = () => {
     }, {});
   };
 
+  const updateSchedule = (exerciseId, day) => {
+    setSchedule([...schedule, { exerciseId, day }]);
+  };
+
   return (
     <div>
       <div className="category-container">
@@ -142,7 +151,7 @@ const ApiComponent = () => {
           );
         })}
       </div>
-      <RetractablePanel />
+      <RetractablePanel key={retractablePanelKey} schedule={schedule} /> {/* Pass the key prop */}
     </div>
   );
 };

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Schedule from './Schedule';
 import './RetractablePanel.css';
 
-const RetractablePanel = ({ onShowSchedule }) => {
+const RetractablePanel = ({ schedule }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+
+  useEffect(() => {
+    if (schedule.length > 0) {
+      setIsPanelOpen(true);
+    }
+  }, [schedule]);
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
-    if (onShowSchedule && isPanelOpen) {
-      onShowSchedule();
-    }
   };
 
   return (
@@ -18,7 +21,7 @@ const RetractablePanel = ({ onShowSchedule }) => {
         {isPanelOpen ? 'Hide Schedule' : 'Show Schedule'}
       </button>
       <div className="panel-content">
-        {isPanelOpen && <Schedule />}
+        {isPanelOpen && <Schedule isPanel={true} />} {/* Pass a prop to indicate it's being rendered in the panel */}
       </div>
     </div>
   );

@@ -13,38 +13,50 @@ export const useUserAuth = () => {
 export const UserAuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userToken, setUserToken] = useState(null);
+  const [userId, setUserId] = useState(null); // New state for user id
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
       setUserToken(token);
+      // Fetch user id when token is available
+      fetchUserId(token);
     }
   }, []);
 
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token !== userToken) {
-      setIsAuthenticated(!!token);
-      setUserToken(token);
-    }
-  }, [userToken]);
+  const fetchUserId = (token) => {
+    fetch(`https://capstone-api-81le.onrender.com/get_user_id/${token}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        setUserId(data.user_id); // Set the user id from the response
+      })
+      .catch(error => {
+        console.error('Error fetching user id:', error);
+      });
+  };
 
   const login = (token) => {
     localStorage.setItem('token', token);
     setIsAuthenticated(true);
     setUserToken(token);
+    fetchUserId(token); // Fetch user id after login
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
     setUserToken(null);
+    setUserId(null); // Clear user id on logout
   };
 
   return (
-    <UserAuthContext.Provider value={{ isAuthenticated, userToken, login, logout, setUserToken }}>
+    <UserAuthContext.Provider value={{ isAuthenticated, userToken, userId, login, logout, setUserToken }}>
       {children}
     </UserAuthContext.Provider>
   );
