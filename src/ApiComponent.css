@@ -43,7 +43,7 @@ body, html {
 }
 
 .grid-container.chest {
-  background-color: #375dad;
+  background-color: #5e8ae9;
   grid-gap: 110px;
 }
 
@@ -52,25 +52,30 @@ body, html {
 }
 
 .grid-container.legs {
-  background-color: #941a18;
+  background-color: #66caa0;
+  padding-left: 10px;
 }
 
 .grid-container.arms {
-  background-color: #b15102de;
+  background-color: #74b95fde;
+  padding-left: 10px;
 }
 
 .grid-container.cardio {
-  background-color: #803f34;
+  background-color: #85d6a0;
+  padding-left: 10px;
 }
 
 .grid-container.back {
-  background-color: #205769;
+  background-color: #93b2ec;
   grid-gap: 10px;
+  padding-left: 30px;
 }
 
 .grid-container.core {
-  background-color: #375c4f;
+  background-color: #69a18e;
   grid-gap: 10px;
+  padding-left: 30px;
 }
 
 .grid-container > div > h2 {

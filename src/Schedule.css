@@ -90,14 +90,16 @@
 }
 
 .remove-button {
-  padding: 8px 12px; /* Adjust padding as needed */
-  font-size: 14px; /* Adjust font size as needed */
-  /* Add any additional styles as needed */
+  padding: 8px 12px;
+  font-size: 14px;
 }
 
-/* Add smaller styles for the Remove button in the panel */
 .remove-button.smaller {
-  padding: 6px 4px; /* Adjust padding for smaller size */
-  font-size: 12px; /* Adjust font size for smaller size */
-  /* Add any additional styles for smaller size */
+  padding: 6px 4px;
+  font-size: 12px;
+}
+
+.exercise-items-container {
+  max-height: 700px;
+  overflow-y: auto;
 }

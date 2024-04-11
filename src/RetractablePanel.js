@@ -21,7 +21,7 @@ const RetractablePanel = ({ schedule }) => {
         {isPanelOpen ? 'Hide Schedule' : 'Show Schedule'}
       </button>
       <div className="panel-content">
-        {isPanelOpen && <Schedule isPanel={true} />} {/* Pass a prop to indicate it's being rendered in the panel */}
+        {isPanelOpen && <Schedule isPanel={true} />}
       </div>
     </div>
   );

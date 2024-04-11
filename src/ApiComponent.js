@@ -124,7 +124,6 @@ const ApiComponent = () => {
             <div key={category} className={`category-wrapper ${categoryClass}-category`}>
               <div className={`grid-container ${categoryClass} custom-grid-container`}>
                 <div className="title">
-                  <h1 className={`${categoryClass}-title`}>REGIMENT</h1>
                 </div>
                 {exercisesByCategory[category].map((exercise) => (
                   <div key={exercise.id} className="grid-item">

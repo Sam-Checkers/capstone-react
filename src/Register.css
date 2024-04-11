@@ -1,4 +1,4 @@
-.login-container {
+.register-container {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -7,17 +7,12 @@
     background-color: #f9f9f9;
   }
   
-  .login-container h2 {
+  .register-container h2 {
     text-align: center;
     margin-bottom: 20px;
   }
   
-  .login-container label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .login-container input {
+  .register-container input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -25,7 +20,7 @@
     border-radius: 5px;
   }
   
-  .login-container button {
+  .register-container button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -35,18 +30,18 @@
     cursor: pointer;
   }
   
-  .login-container button:disabled {
+  .register-container button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   }
   
-  .login-container p {
+  .register-container p {
     text-align: center;
     margin-top: 20px;
     color: #1ea033;
   }
-
-  .login-box {
+  
+  .register-box {
     max-width: 400px;
     margin: 0 auto;
     border: 1px solid #ccc;
@@ -55,7 +50,7 @@
     padding: 20px;
     margin-top: 100px;
   }
-
+  
   body {
     background-color: rgb(197, 194, 194);
   }

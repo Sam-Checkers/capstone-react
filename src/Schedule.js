@@ -114,7 +114,6 @@ const Schedule = ({ isPanel }) => {
     });
   };
 
-
   return (
     <div>
       <h2>Schedule</h2>
@@ -128,19 +127,23 @@ const Schedule = ({ isPanel }) => {
                 <div>{day.month}</div>
               </div>
               <div className="exercises-list">
-                {organizedExercises[day.dayOfWeek] && organizedExercises[day.dayOfWeek].map((exercise, index) => (
-                  <div key={index} className={`exercise-item ${exercise.completed ? 'completed' : ''} ${isPanel ? 'smaller' : ''}`}>
-                    <div className="exercise-details">
-                      <div className="exercise-name">{exercise.name}</div>
-                      <img src={exercise.image} alt={exercise.name} className="exercise-image" />
-                    </div>
-                    <div className='exercise-buttons'>
-                      <button onClick={() => handleRemoveExercise(exercise.id, day.dayOfWeek)} className={`remove-button ${isPanel ? 'smaller' : ''}`}>
-                        Remove
-                      </button>
-                    </div>
+                {organizedExercises[day.dayOfWeek] && (
+                  <div className="exercise-items-container">
+                    {organizedExercises[day.dayOfWeek].map((exercise, index) => (
+                      <div key={index} className={`exercise-item ${exercise.completed ? 'completed' : ''} ${isPanel ? 'smaller' : ''}`}>
+                        <div className="exercise-details">
+                          <div className="exercise-name">{exercise.name}</div>
+                          <img src={exercise.image} alt={exercise.name} className="exercise-image" />
+                        </div>
+                        <div className='exercise-buttons'>
+                          <button onClick={() => handleRemoveExercise(exercise.id, day.dayOfWeek)} className={`remove-button ${isPanel ? 'smaller' : ''}`}>
+                            Remove
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                )}
               </div>
             </div>
           ))}
