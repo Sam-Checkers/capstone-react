@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 
-const Register = () => {
+const Register = ({ onRegistrationSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -16,8 +16,14 @@ const Register = () => {
         body: JSON.stringify({ email: email, password: password }),
       });
       const data = await response.json();
-      console.log('User token:', data.access_token);
-      setMessage('Registration successful');
+
+      if (response.ok) {
+        console.log('User token:', data.access_token);
+        setMessage('Registration successful');
+        onRegistrationSuccess();
+      } else {
+        setMessage('Registration failed');
+      }
     } catch (error) {
       console.error(error);
       setMessage('Registration failed');

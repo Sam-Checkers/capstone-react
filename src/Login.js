@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useUserAuth } from './UserAuthContext';
-import './Login.css'; // Import the CSS file
+import './Login.css';
 
 const Login = () => {
   const { login } = useUserAuth();
@@ -24,6 +24,8 @@ const Login = () => {
       login(data.access_token);
       
       setMessage('Login successful');
+  
+      window.location.href = '/';
     } catch (error) {
       console.error(error);
       setMessage('Login failed');

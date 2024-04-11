@@ -8,7 +8,7 @@ const ApiComponent = () => {
 
   const [exercisesByCategory, setExercisesByCategory] = useState({});
   const [schedule, setSchedule] = useState([]);
-  const [retractablePanelKey, setRetractablePanelKey] = useState(0); // Add a state for the key
+  const [retractablePanelKey, setRetractablePanelKey] = useState(0);
 
   const addExerciseToSchedule = async (exerciseId, day) => {
     try {
@@ -44,7 +44,7 @@ const ApiComponent = () => {
         }
   
         setSchedule([...schedule, { exerciseId, day }]);
-        setRetractablePanelKey(prevKey => prevKey + 1); // Update the key to force re-render
+        setRetractablePanelKey(prevKey => prevKey + 1);
       } else {
         const errorData = await response.json();
         console.error(errorData.error);

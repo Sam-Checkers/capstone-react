@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { UserAuthProvider, useUserAuth } from './UserAuthContext';
 import NavBar from './NavBar';
@@ -9,13 +9,23 @@ import Register from './Register';
 
 function App() {
   const { isAuthenticated } = useUserAuth();
-  const currentPath = window.location.pathname;
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+
+  useEffect(() => {
+    const handlePathChange = () => {
+      setCurrentPath(window.location.pathname);
+    };
+    window.addEventListener('popstate', handlePathChange);
+    return () => {
+      window.removeEventListener('popstate', handlePathChange);
+    };
+  }, []);
 
   let componentToRender;
 
   if (!isAuthenticated) {
     if (currentPath === '/register') {
-      componentToRender = <Register />;
+      componentToRender = <Register onRegistrationSuccess={() => setCurrentPath('/login')} />;
     } else {
       componentToRender = <LoginPage />;
     }

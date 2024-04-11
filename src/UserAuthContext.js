@@ -13,14 +13,13 @@ export const useUserAuth = () => {
 export const UserAuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userToken, setUserToken] = useState(null);
-  const [userId, setUserId] = useState(null); // New state for user id
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
       setUserToken(token);
-      // Fetch user id when token is available
       fetchUserId(token);
     }
   }, []);
@@ -34,7 +33,7 @@ export const UserAuthProvider = ({ children }) => {
         return response.json();
       })
       .then(data => {
-        setUserId(data.user_id); // Set the user id from the response
+        setUserId(data.user_id);
       })
       .catch(error => {
         console.error('Error fetching user id:', error);
@@ -45,14 +44,14 @@ export const UserAuthProvider = ({ children }) => {
     localStorage.setItem('token', token);
     setIsAuthenticated(true);
     setUserToken(token);
-    fetchUserId(token); // Fetch user id after login
+    fetchUserId(token);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
     setIsAuthenticated(false);
     setUserToken(null);
-    setUserId(null); // Clear user id on logout
+    setUserId(null);
   };
 
   return (
