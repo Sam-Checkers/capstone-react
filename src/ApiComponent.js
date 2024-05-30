@@ -150,7 +150,7 @@ const ApiComponent = () => {
           );
         })}
       </div>
-      <RetractablePanel key={retractablePanelKey} schedule={schedule} /> {/* Pass the key prop */}
+      <RetractablePanel key={retractablePanelKey} schedule={schedule} />
     </div>
   );
 };

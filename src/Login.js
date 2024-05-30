@@ -17,38 +17,45 @@ const Login = () => {
         },
         body: JSON.stringify({ email: email, password: password }),
       });
-      const data = await response.json();
-      
-      console.log('User token:', data.access_token);
-      
-      login(data.access_token);
-      
-      setMessage('Login successful');
-  
-      window.location.href = '/';
+      if (response.ok) {
+        const data = await response.json();
+        console.log('User token:', data.access_token);
+        login(data.access_token);
+        setMessage('Login successful');
+        window.location.href = '/';
+      } else {
+        setMessage('Login failed');
+      }
     } catch (error) {
       console.error(error);
       setMessage('Login failed');
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
   return (
     <div className="login-box">
       <div className="login-container">
         <h2>Login</h2>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={handleLogin}>Login</button>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit">Login</button>
+        </form>
         <p>{message}</p>
       </div>
     </div>
