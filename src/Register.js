@@ -30,6 +30,12 @@ const Register = ({ onRegistrationSuccess }) => {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleRegister();
+    }
+  };
+
   return (
     <div className="register-box">
       <div className="register-container">
@@ -39,6 +45,7 @@ const Register = ({ onRegistrationSuccess }) => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyPress={handleKeyPress}
           className="input-field"
         />
         <input
@@ -46,6 +53,7 @@ const Register = ({ onRegistrationSuccess }) => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onKeyPress={handleKeyPress}
           className="input-field"
         />
         <button onClick={handleRegister} className="login-button">Register</button>
