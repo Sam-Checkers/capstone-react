@@ -16,7 +16,7 @@ const Schedule = ({ isPanel }) => {
     }
   };
   const fetchUserExercises = (userId, token) => {
-    fetch(`https://capstone-api-81le.onrender.com/user_exercise/${userId}`, {
+    fetch(`https://capstone-api-main-7d0x.onrender.com/user_exercise/${userId}`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
@@ -35,14 +35,14 @@ const Schedule = ({ isPanel }) => {
           if (!organized[day]) {
             organized[day] = [];
           }
-          const exerciseResponse = await fetch(`https://capstone-api-81le.onrender.com/get_exercise/${exercise_id}`);
+          const exerciseResponse = await fetch(`https://capstone-api-main-7d0x.onrender.com/get_exercise/${exercise_id}`);
           const exerciseData = await exerciseResponse.json();
           const imageNameJpg = `${exerciseData.exercise.name}.jpg`;
           const imageNameJpeg = `${exerciseData.exercise.name}.jpeg`;
-          let exerciseImageUrl = `https://capstone-api-81le.onrender.com/get_image/${imageNameJpg}`;
+          let exerciseImageUrl = `https://capstone-api-main-7d0x.onrender.com/get_image/${imageNameJpg}`;
           const jpgResponse = await fetch(exerciseImageUrl);
           if (!jpgResponse.ok) {
-            exerciseImageUrl = `https://capstone-api-81le.onrender.com/get_image/${imageNameJpeg}`;
+            exerciseImageUrl = `https://capstone-api-main-7d0x.onrender.com/get_image/${imageNameJpeg}`;
           }
           organized[day].push({ id: exercise_id, name: exerciseData.exercise.name, image: exerciseImageUrl });
         });
@@ -70,7 +70,7 @@ const Schedule = ({ isPanel }) => {
         });
       }
       setDaysOfWeek(days);
-      fetch(`https://capstone-api-81le.onrender.com/get_user_id/${token}`)
+      fetch(`https://capstone-api-main-7d0x.onrender.com/get_user_id/${token}`)
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -89,7 +89,7 @@ const Schedule = ({ isPanel }) => {
   }, [isAuthenticated, token]);
 
   const handleRemoveExercise = (exerciseId, dayOfWeek) => {
-    fetch(`https://capstone-api-81le.onrender.com/remove_user_exercise/${exerciseId}`, {
+    fetch(`https://capstone-api-main-7d0x.onrender.com/remove_user_exercise/${exerciseId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('https://capstone-api-81le.onrender.com/login', {
+      const response = await fetch('https://capstone-api-main-7d0x.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

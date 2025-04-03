@@ -23,7 +23,7 @@ const ApiComponent = () => {
         console.log(`Bearer ${tokenFromStorage}`);
       }
   
-      const response = await fetch(`https://capstone-api-81le.onrender.com/add_user_exercise/${exerciseId}`, {
+      const response = await fetch(`https://capstone-api-main-7d0x.onrender.com/add_user_exercise/${exerciseId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const ApiComponent = () => {
   
       const fetchExercises = async () => {
         try {
-          const response = await fetch('https://capstone-api-81le.onrender.com/get_all_exercises');
+          const response = await fetch('https://capstone-api-main-7d0x.onrender.com/get_all_exercises');
           if (response.ok) {
             const exerciseData = await response.json();
             const groupedExercises = groupExercisesByCategory(exerciseData.exercises);
@@ -78,7 +78,7 @@ const ApiComponent = () => {
                 const imageExtensions = exerciseIdsWithJpeg.includes(exercise.id) ? ['jpeg'] : ['jpg', 'jpeg'];
                 let imageUrl = null;
                 for (const extension of imageExtensions) {
-                  const imageURL = `https://capstone-api-81le.onrender.com/get_image/${imageName}.${extension}`;
+                  const imageURL = `https://capstone-api-main-7d0x.onrender.com/get_image/${imageName}.${extension}`;
                   const imageResponse = await fetch(imageURL);
                   if (imageResponse.ok) {
                     imageUrl = imageURL;

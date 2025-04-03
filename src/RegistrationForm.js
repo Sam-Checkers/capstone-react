@@ -6,7 +6,7 @@ const RegistrationPage = ({ onRegistrationSuccess }) => {
   const [message, setMessage] = useState('');
 
   const handleRegistration = () => {
-    fetch('https://capstone-api-81le.onrender.com/register', {
+    fetch('https://capstone-api-main-7d0x.onrender.com/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

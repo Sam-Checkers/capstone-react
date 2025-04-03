@@ -25,7 +25,7 @@ export const UserAuthProvider = ({ children }) => {
   }, []);
 
   const fetchUserId = (token) => {
-    fetch(`https://capstone-api-81le.onrender.com/get_user_id/${token}`)
+    fetch(`https://capstone-api-main-7d0x.onrender.com/get_user_id/${token}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
