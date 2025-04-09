@@ -12,8 +12,12 @@ const ApiComponent = () => {
 
   const addExerciseToSchedule = async (exerciseId, day) => {
     try {
-      // Ensure exerciseId is treated as a string
+      // IMPORTANT: Ensure exerciseId is treated as a string from the very beginning
+      // This is crucial when the ID comes from another part of your application
       const exerciseIdStr = String(exerciseId);
+      
+      console.log('Original exercise ID:', exerciseId);
+      console.log('String exercise ID:', exerciseIdStr);
       console.log('Adding exercise to schedule:', exerciseIdStr, day);
   
       const tokenFromStorage = localStorage.getItem('token');
@@ -21,11 +25,12 @@ const ApiComponent = () => {
         console.error('User token not found in local storage. Unable to add exercise to schedule.');
         return;
       }
-      if (tokenFromStorage) {
-        console.log(`Bearer ${tokenFromStorage}`);
-      }
   
-      const response = await fetch(`https://capstone-api-main-7d0x.onrender.com/add_user_exercise/${exerciseIdStr}`, {
+      // Use template literals to ensure the ID is inserted as a string without any conversion
+      const url = `https://capstone-api-main-7d0x.onrender.com/add_user_exercise/${exerciseIdStr}`;
+      console.log('Request URL:', url);
+  
+      const response = await fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,6 +38,8 @@ const ApiComponent = () => {
         },
         body: JSON.stringify({
           day: day,
+          // Include the ID as a string in the body as well for redundancy
+          exerciseIdStr: exerciseIdStr
         }),
       });
   
@@ -44,18 +51,15 @@ const ApiComponent = () => {
           localStorage.setItem('token', newToken);
         }
   
-        setSchedule([...schedule, { exerciseId: exerciseIdStr, day }]);
+        // Use the string version when updating state
+        setSchedule(prevSchedule => [...prevSchedule, { exerciseId: exerciseIdStr, day }]);
         setRetractablePanelKey(prevKey => prevKey + 1);
       } else {
         const errorData = await response.json();
-        console.error(errorData.error);
-        // Optionally show an error message to the user
-        // For example: setErrorMessage(errorData.error);
+        console.error('Error response:', errorData);
       }
     } catch (error) {
       console.error('An error occurred:', error);
-      // Optionally show a generic error message to the user
-      // For example: setErrorMessage('Failed to add exercise to schedule. Please try again.');
     }
   };
   useEffect(() => {
