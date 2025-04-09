@@ -10,10 +10,11 @@ const ApiComponent = () => {
   const [schedule, setSchedule] = useState([]);
   const [retractablePanelKey, setRetractablePanelKey] = useState(0);
 
-  javascript
   const addExerciseToSchedule = async (exerciseId, day) => {
     try {
-      console.log('Adding exercise to schedule:', exerciseId, day);
+      // Ensure exerciseId is treated as a string
+      const exerciseIdStr = String(exerciseId);
+      console.log('Adding exercise to schedule:', exerciseIdStr, day);
   
       const tokenFromStorage = localStorage.getItem('token');
       if (!tokenFromStorage) {
@@ -24,14 +25,14 @@ const ApiComponent = () => {
         console.log(`Bearer ${tokenFromStorage}`);
       }
   
-      const response = await fetch(`https://capstone-api-main-7d0x.onrender.com/add_user_exercise/${exerciseId}`, {
+      const response = await fetch(`https://capstone-api-main-7d0x.onrender.com/add_user_exercise/${exerciseIdStr}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${tokenFromStorage}`,
         },
         body: JSON.stringify({
-          day: day,  // Only send the day, not exerciseId
+          day: day,
         }),
       });
   
@@ -43,14 +44,18 @@ const ApiComponent = () => {
           localStorage.setItem('token', newToken);
         }
   
-        setSchedule([...schedule, { exerciseId, day }]);
+        setSchedule([...schedule, { exerciseId: exerciseIdStr, day }]);
         setRetractablePanelKey(prevKey => prevKey + 1);
       } else {
         const errorData = await response.json();
         console.error(errorData.error);
+        // Optionally show an error message to the user
+        // For example: setErrorMessage(errorData.error);
       }
     } catch (error) {
       console.error('An error occurred:', error);
+      // Optionally show a generic error message to the user
+      // For example: setErrorMessage('Failed to add exercise to schedule. Please try again.');
     }
   };
   useEffect(() => {
