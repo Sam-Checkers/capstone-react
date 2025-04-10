@@ -75,10 +75,18 @@ const ApiComponent = () => {
           if (response.ok) {
             const exerciseData = await response.json();
             const groupedExercises = groupExercisesByCategory(exerciseData.exercises);
-            const exerciseIdsWithJpeg = [3, 4, 5, 7, 8, 11, 16, 17, 21];
+            
+            // Update this array with your new string IDs
+            const exerciseIdsWithJpeg = [
+              'chest-001','chest-002','chest-003', 'back-001', 'back-002', 'back-003', 'back-004', 'back-005', 
+              'core-001','core-002','core-003','core-004','core-005', 'arms-001','arms-002','arms-003', 'arms-004', 
+              'legs-001','legs-002','legs-003','legs-004', 'cardio-001','cardio-002','cardio-003','cardio-004',
+            ];
+            
             for (const category in groupedExercises) {
               for (const exercise of groupedExercises[category]) {
                 const imageName = exercise.name;
+                // Use includes with string comparison
                 const imageExtensions = exerciseIdsWithJpeg.includes(exercise.id) ? ['jpeg'] : ['jpg', 'jpeg'];
                 let imageUrl = null;
                 for (const extension of imageExtensions) {
@@ -103,7 +111,7 @@ const ApiComponent = () => {
       fetchExercises();
     }
   }, [isAuthenticated, setUserToken]);
-
+  
   const groupExercisesByCategory = (exercises) => {
     return exercises.reduce((grouped, exercise) => {
       if (!grouped[exercise.category]) {
@@ -113,8 +121,9 @@ const ApiComponent = () => {
       return grouped;
     }, {});
   };
-
+  
   const updateSchedule = (exerciseId, day) => {
+    // This is already good - no changes needed
     setSchedule([...schedule, { exerciseId, day }]);
   };
 
