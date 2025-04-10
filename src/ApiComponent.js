@@ -12,12 +12,11 @@ const ApiComponent = () => {
 
   const addExerciseToSchedule = async (exerciseId, day) => {
     try {
-      // IMPORTANT: Ensure exerciseId is treated as a string from the very beginning
-      // This is crucial when the ID comes from another part of your application
+      // Since your IDs are now strings by default (like "chest-001"),
+      // this conversion is redundant but harmless
       const exerciseIdStr = String(exerciseId);
       
-      console.log('Original exercise ID:', exerciseId);
-      console.log('String exercise ID:', exerciseIdStr);
+      console.log('Exercise ID:', exerciseIdStr);
       console.log('Adding exercise to schedule:', exerciseIdStr, day);
   
       const tokenFromStorage = localStorage.getItem('token');
@@ -26,7 +25,6 @@ const ApiComponent = () => {
         return;
       }
   
-      // Use template literals to ensure the ID is inserted as a string without any conversion
       const url = `https://capstone-api-main-7d0x.onrender.com/add_user_exercise/${exerciseIdStr}`;
       console.log('Request URL:', url);
   
@@ -38,8 +36,7 @@ const ApiComponent = () => {
         },
         body: JSON.stringify({
           day: day,
-          // Include the ID as a string in the body as well for redundancy
-          exerciseIdStr: exerciseIdStr
+          exerciseIdStr: exerciseIdStr  // This is good, keeping it as a string
         }),
       });
   
@@ -50,8 +47,7 @@ const ApiComponent = () => {
           const newToken = data.newToken;
           localStorage.setItem('token', newToken);
         }
-  
-        // Use the string version when updating state
+        // Make sure you're using the string ID here too
         setSchedule(prevSchedule => [...prevSchedule, { exerciseId: exerciseIdStr, day }]);
         setRetractablePanelKey(prevKey => prevKey + 1);
       } else {
